@@ -1,4 +1,3 @@
-# os-labs
-NYU Paris OS Labs
+# NYU Paris OS Labs
 
 Course Number: CS-UY 3224G
