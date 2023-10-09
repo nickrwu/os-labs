@@ -1,0 +1,3 @@
+series.sh:pwd; ls; mkdir class; ls; cd class; ls; pwd; cd ..; pwd
+test.sh:pw sdfs
+test.sh:pwd

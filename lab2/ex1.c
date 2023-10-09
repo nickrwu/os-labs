@@ -23,8 +23,8 @@ int main() {
           exit(0);
         default:
           waitpid(r, NULL, 0);
-          write(STDOUT_FILENO, "d", 1);
               printf("\n");
+          write(STDOUT_FILENO, "d", 1);
           exit(0);
     }
   }
