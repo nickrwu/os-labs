@@ -110,12 +110,11 @@ void release_memory(Node *head, char *process_name) {
         return;
     }
 
-    // If the previous node is NULL, then the head needs to be updated.
-    if (prev == NULL) {
-        // X -> ... -> Null
-        head->next = curr->next;
-        free(curr);
-    }
+    // If the previous node is the head, then the head needs to be updated.
+    // if (prev == head) {
+    //     // X -> ... -> Null
+    //     head->next = curr->next;
+    // }
 
 
     Node *next = curr->next;
@@ -137,14 +136,23 @@ void compact (Node *head) {
     Node *curr = head;
     int end = 0;
     while (curr != NULL) {
-        // Skip if the current node is the head of the linked list
-        if (curr == head) { 
-            curr = curr->next;
-            continue;
+        // If the current node is the head of the linked list
+        if (curr == head) {
+            if (curr->next && curr->next->addr > 0) {
+                // |H|    |O| to |H||O|
+                printf("%d", curr->next->addr);
+                curr->next->addr = 0;
+                printf("%d", curr->next->addr);
+            } else {
+                // Skip if |H||O|
+                curr = curr->next;
+                continue;
+            }
         }
         
         // If the current node has a next node and they are the memory blocks are not next to each other
-        if (curr->next && curr->next->addr != (curr->addr + curr->size) + 1) {
+        // |O|    |O| to |O||O|
+        else if (curr->next && curr->next->addr != (curr->addr + curr->size) + 1) {
             // Set the next node's address to be next to the current node
             curr->next->addr = curr->addr + curr->size + 1;
         }
@@ -220,8 +228,6 @@ int main(int argc, char **argv) {
             } else {
                 printf("Usage: RQ {process name} {process size}.\n");
             }
-
-            // allocate_memory(, process_name, process_size);
 
         } else if (strcmp(command, "RL") == 0 || strcmp(command, "rl") == 0) {
             char *process_name = strtok(NULL, " ");
